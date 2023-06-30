@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yjq.programmer.dao.SeatMapper">
+  <resultMap id="BaseResultMap" type="com.yjq.programmer.domain.Seat">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="row" jdbcType="INTEGER" property="row" />
+    <result column="col" jdbcType="INTEGER" property="col" />
+    <result column="open_time" jdbcType="DATE" property="openTime" />
+    <result column="schedule_id" jdbcType="CHAR" property="scheduleId" />
+    <result column="total_num" jdbcType="INTEGER" property="totalNum" />
+    <result column="pick_num" jdbcType="INTEGER" property="pickNum" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, `row`, col, open_time, schedule_id, total_num, pick_num, version
+  </sql>
+  <select id="selectByExample" parameterType="com.yjq.programmer.domain.SeatExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from seat
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from seat
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from seat
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yjq.programmer.domain.SeatExample">
+    delete from seat
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yjq.programmer.domain.Seat">
+    insert into seat (id, `row`, col, open_time,
+      schedule_id, total_num, pick_num,
+      version)
+    values (#{id,jdbcType=CHAR}, #{row,jdbcType=INTEGER}, #{col,jdbcType=INTEGER}, #{openTime,jdbcType=DATE},
+      #{scheduleId,jdbcType=CHAR}, #{totalNum,jdbcType=INTEGER}, #{pickNum,jdbcType=INTEGER},
+      #{version,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yjq.programmer.domain.Seat">
+    insert into seat
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="row != null">
+        `row`,
+      </if>
+      <if test="col != null">
+        col,
+      </if>
+      <if test="openTime != null">
+        open_time,
+      </if>
+      <if test="scheduleId != null">
+        schedule_id,
+      </if>
+      <if test="totalNum != null">
+        total_num,
+      </if>
+      <if test="pickNum != null">
+        pick_num,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="row != null">
+        #{row,jdbcType=INTEGER},
+      </if>
+      <if test="col != null">
+        #{col,jdbcType=INTEGER},
+      </if>
+      <if test="openTime != null">
+        #{openTime,jdbcType=DATE},
+      </if>
+      <if test="scheduleId != null">
+        #{scheduleId,jdbcType=CHAR},
+      </if>
+      <if test="totalNum != null">
+        #{totalNum,jdbcType=INTEGER},
+      </if>
+      <if test="pickNum != null">
+        #{pickNum,jdbcType=INTEGER},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yjq.programmer.domain.SeatExample" resultType="java.lang.Integer">
+    select count(*) from seat
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update seat
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=CHAR},
+      </if>
+      <if test="record.row != null">
+        `row` = #{record.row,jdbcType=INTEGER},
+      </if>
+      <if test="record.col != null">
+        col = #{record.col,jdbcType=INTEGER},
+      </if>
+      <if test="record.openTime != null">
+        open_time = #{record.openTime,jdbcType=DATE},
+      </if>
+      <if test="record.scheduleId != null">
+        schedule_id = #{record.scheduleId,jdbcType=CHAR},
+      </if>
+      <if test="record.totalNum != null">
+        total_num = #{record.totalNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.pickNum != null">
+        pick_num = #{record.pickNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.version != null">
+        version = #{record.version,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update seat
+    set id = #{record.id,jdbcType=CHAR},
+      `row` = #{record.row,jdbcType=INTEGER},
+      col = #{record.col,jdbcType=INTEGER},
+      open_time = #{record.openTime,jdbcType=DATE},
+      schedule_id = #{record.scheduleId,jdbcType=CHAR},
+      total_num = #{record.totalNum,jdbcType=INTEGER},
+      pick_num = #{record.pickNum,jdbcType=INTEGER},
+      version = #{record.version,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yjq.programmer.domain.Seat">
+    update seat
+    <set>
+      <if test="row != null">
+        `row` = #{row,jdbcType=INTEGER},
+      </if>
+      <if test="col != null">
+        col = #{col,jdbcType=INTEGER},
+      </if>
+      <if test="openTime != null">
+        open_time = #{openTime,jdbcType=DATE},
+      </if>
+      <if test="scheduleId != null">
+        schedule_id = #{scheduleId,jdbcType=CHAR},
+      </if>
+      <if test="totalNum != null">
+        total_num = #{totalNum,jdbcType=INTEGER},
+      </if>
+      <if test="pickNum != null">
+        pick_num = #{pickNum,jdbcType=INTEGER},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yjq.programmer.domain.Seat">
+    update seat
+    set `row` = #{row,jdbcType=INTEGER},
+      col = #{col,jdbcType=INTEGER},
+      open_time = #{openTime,jdbcType=DATE},
+      schedule_id = #{scheduleId,jdbcType=CHAR},
+      total_num = #{totalNum,jdbcType=INTEGER},
+      pick_num = #{pickNum,jdbcType=INTEGER},
+      version = #{version,jdbcType=INTEGER}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

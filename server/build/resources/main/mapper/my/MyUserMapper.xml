@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yjq.programmer.dao.my.MyUserMapper">
+
+    <resultMap type="com.yjq.programmer.domain.CreditItem" id="findCreditItemBySearchMap">
+        <id column="id" property="id" />
+        <result column="rate" property="rate" />
+        <result column="user_id" property="userId" />
+        <result column="create_time" property="createTime" />
+        <result column="description" property="description" />
+        <result column="now_rate" property="nowRate" />
+        <result column="state" property="state" />
+    </resultMap>
+
+    <!-- 根据条件查询信誉积分详情数据 -->
+    <select id="findCreditItemBySearch" parameterType="java.util.Map" resultMap="findCreditItemBySearchMap">
+        select ci.id, ci.rate, ci.user_id, ci.create_time, ci.description, ci.now_rate, ci.state
+        from user u, credit_item ci where u.id = ci.user_id
+        <if test="userId != null and userId != ''">
+            and ci.user_id = #{userId}
+        </if>
+        <if test="username != null and username != ''">
+            and u.username like concat('%', #{username}, '%')
+        </if>
+        order by ci.create_time desc
+    </select>
+</mapper>
